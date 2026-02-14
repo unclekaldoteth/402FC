@@ -13,12 +13,39 @@ const {
 
 const PORT = process.env.PORT || 3001;
 
-function createApp() {
-  const app = express();
+function parseCorsOrigins(value) {
+  if (!value || typeof value !== 'string') return [];
+  return value
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+}
 
-  // Middleware
-  app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+function getCorsConfig() {
+  const defaultOrigins = ['http://localhost:3000', 'http://localhost:3001'];
+  const configuredOrigins = parseCorsOrigins(process.env.CORS_ORIGINS);
+  const allowedOrigins = configuredOrigins.length > 0 ? configuredOrigins : defaultOrigins;
+  const allowVercelPreviewOrigins =
+    String(process.env.ALLOW_VERCEL_PREVIEW_ORIGINS || '').toLowerCase() === 'true' ||
+    process.env.ALLOW_VERCEL_PREVIEW_ORIGINS === '1';
+
+  function isAllowedOrigin(origin) {
+    if (!origin) return true;
+    if (allowedOrigins.includes(origin)) return true;
+    if (!allowVercelPreviewOrigins) return false;
+
+    try {
+      const hostname = new URL(origin).hostname;
+      return hostname.endsWith('.vercel.app');
+    } catch (error) {
+      return false;
+    }
+  }
+
+  return {
+    origin(origin, callback) {
+      callback(null, isAllowedOrigin(origin));
+    },
     credentials: true,
     allowedHeaders: [
       'Content-Type',
@@ -37,8 +64,15 @@ function createApp() {
       'x-payment-network',
       'x-payment-asset',
       'x-payment-response',
-    ]
-  }));
+    ],
+  };
+}
+
+function createApp() {
+  const app = express();
+
+  // Middleware
+  app.use(cors(getCorsConfig()));
   app.use(express.json());
 
   // Health check

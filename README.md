@@ -41,7 +41,7 @@ Server → 200 OK + stream session payload
 - **Backend:** Express.js, x402-stacks middleware
 - **Payments:** x402-stacks (STX/sBTC on Stacks blockchain)
 - **Wallet:** @stacks/connect (Leather/Xverse)
-- **Data:** Football-Data.org API, Scorebat Video API, OpenAI
+- **Data:** Football-Data.org API, Scorebat Video API, Gemini API
 
 ## Quick Start
 
@@ -73,7 +73,10 @@ STX_ADDRESS=your_stx_testnet_address
 FACILITATOR_URL=https://facilitator.stacksx402.com
 FOOTBALL_DATA_API_KEY=your_key  # Free at football-data.org
 SCOREBAT_API_KEY=your_key       # Free at scorebat.com
-OPENAI_API_KEY=your_key         # Optional
+GEMINI_API_KEY=your_key         # Optional
+GEMINI_MODEL=gemini-1.5-flash   # Optional
+CORS_ORIGINS=http://localhost:3000
+ALLOW_VERCEL_PREVIEW_ORIGINS=false  # true if you want all *.vercel.app previews
 ```
 
 ### 3. Run
@@ -131,7 +134,7 @@ Frontend (Next.js) → HTTP/x402 → Backend (Express)
                                         ├── Streaming → Session unlock API
                                         ├── Highlights → Scorebat API
                                         ├── Analytics → Football-Data.org
-                                        └── AI Summary → OpenAI
+                                        └── AI Summary → Gemini API
 ```
 
 ## License

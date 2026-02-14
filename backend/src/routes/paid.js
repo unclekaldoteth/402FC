@@ -113,11 +113,23 @@ function getDemoHighlights(teamName) {
     ];
 }
 
+function extractGeminiText(payload) {
+    const parts = payload?.candidates?.[0]?.content?.parts;
+    if (!Array.isArray(parts)) return null;
+    const text = parts
+        .map((part) => (typeof part?.text === 'string' ? part.text.trim() : ''))
+        .filter(Boolean)
+        .join('\n')
+        .trim();
+    return text || null;
+}
+
 // Helper: generate AI match summary
 async function generateAISummary(matchData) {
-    const OPENAI_KEY = process.env.OPENAI_API_KEY;
+    const GEMINI_KEY = process.env.GEMINI_API_KEY;
+    const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
 
-    if (!OPENAI_KEY) {
+    if (!GEMINI_KEY) {
         // Return a mock AI summary for demo
         return generateMockSummary(matchData);
     }
@@ -125,29 +137,42 @@ async function generateAISummary(matchData) {
     try {
         const prompt = buildMatchPrompt(matchData);
         const response = await axios.post(
-            'https://api.openai.com/v1/chat/completions',
+            `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GEMINI_MODEL)}:generateContent?key=${encodeURIComponent(GEMINI_KEY)}`,
             {
-                model: 'gpt-3.5-turbo',
-                messages: [
+                contents: [
                     {
-                        role: 'system',
-                        content: 'You are an expert football analyst. Provide tactical analysis of matches. Be concise, insightful, and data-driven. Use bullet points for key insights.'
+                        role: 'user',
+                        parts: [
+                            {
+                                text: `You are an expert football analyst. Provide tactical analysis of matches. Be concise, insightful, and data-driven. Use bullet points for key insights.\n\n${prompt}`,
+                            },
+                        ],
                     },
-                    { role: 'user', content: prompt }
                 ],
-                max_tokens: 500,
-                temperature: 0.7,
+                generationConfig: {
+                    temperature: 0.7,
+                    maxOutputTokens: 700,
+                },
             },
-            { headers: { Authorization: `Bearer ${OPENAI_KEY}` } }
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
         );
 
+        const analysis = extractGeminiText(response.data);
+        if (!analysis) {
+            throw new Error('Gemini returned an empty response');
+        }
+
         return {
-            analysis: response.data.choices?.[0]?.message?.content,
-            model: 'gpt-3.5-turbo',
+            analysis,
+            model: GEMINI_MODEL,
             generatedAt: new Date().toISOString(),
         };
     } catch (error) {
-        console.warn('OpenAI error, using mock:', error.message);
+        console.warn('Gemini API error, using mock:', error.message);
         return generateMockSummary(matchData);
     }
 }
