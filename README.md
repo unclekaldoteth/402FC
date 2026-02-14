@@ -1,4 +1,4 @@
-# 402FC ⚽ — Pay-Per-Watch Football Streaming
+# 402FC — Pay-Per-Watch Football Streaming
 
 > Pay micro-amounts of STX to unlock stream sessions, match highlights, deep analytics, and AI-powered tactical analysis. No subscriptions — powered by **x402-stacks** on the Stacks blockchain.
 
@@ -8,19 +8,19 @@ Future development roadmap:
 - [Future Development: Premier League + World Cup + Predictions](docs/FUTURE_DEVELOPMENT.md)
 - [Why 402FC Exists: Background, Problem, Solution, Market Opportunity](docs/WHY_402FC.md)
 
-## 🎯 What is 402FC?
+## What is 402FC?
 
 402FC is a web3 dApp that demonstrates the x402 payment protocol for football content monetization:
 
 | Content | Price | Description |
 |---------|-------|-------------|
-| 🆓 Live Scores | Free | Matches, standings, fixtures across 5+ leagues |
-| 📺 Stream Watch Pass | 0.08 STX | Pay-per-watch stream session (current MVP development) |
-| 🎬 Highlights | 0.05 STX | Official video highlights from Scorebat |
-| 📊 Deep Analytics | 0.03 STX | Possession, xG, shots, tactical breakdowns |
-| 🤖 AI Summary | 0.02 STX | AI-generated tactical analysis |
+| Live Scores | Free | Matches, standings, fixtures across 5+ leagues |
+| Stream Watch Pass | 0.08 STX | Pay-per-watch stream session (current MVP development) |
+| Highlights | 0.05 STX | Official video highlights from Scorebat |
+| Deep Analytics | 0.03 STX | Possession, xG, shots, tactical breakdowns |
+| AI Summary | 0.02 STX | AI-generated tactical analysis |
 
-## ⚡ How x402 Works
+## How x402 Works
 
 1. **Browse** — Free scores and standings, no wallet needed
 2. **Click Unlock** — Premium content returns HTTP 402 (Payment Required)
@@ -35,7 +35,7 @@ Client → GET /api/streams/premier-league-live-1/watch + payment-signature
 Server → 200 OK + stream session payload
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend:** Next.js 16, Vanilla CSS, Recharts
 - **Backend:** Express.js, x402-stacks middleware
@@ -43,7 +43,7 @@ Server → 200 OK + stream session payload
 - **Wallet:** @stacks/connect (Leather/Xverse)
 - **Data:** Football-Data.org API, Scorebat Video API, OpenAI
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js 18+
@@ -86,9 +86,9 @@ cd backend && npm run dev
 cd frontend && npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) 🎉
+Open [http://localhost:3000](http://localhost:3000)
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 402fc/
@@ -122,7 +122,7 @@ Open [http://localhost:3000](http://localhost:3000) 🎉
 └── README.md
 ```
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 Frontend (Next.js) → HTTP/x402 → Backend (Express)
@@ -134,11 +134,11 @@ Frontend (Next.js) → HTTP/x402 → Backend (Express)
                                         └── AI Summary → OpenAI
 ```
 
-## 📜 License
+## License
 
 MIT
 
-## 🙏 Credits
+## Credits
 
 - [x402-stacks](https://docs.x402stacks.xyz/) — Payment protocol
 - [Stacks](https://stacks.co) — Bitcoin L2 blockchain
