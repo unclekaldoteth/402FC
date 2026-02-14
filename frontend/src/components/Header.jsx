@@ -9,24 +9,16 @@ export default function Header() {
 
     return (
         <header className="header-wrapper">
-            <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <div className="container header-inner">
                 <Link href="/" className="logo">
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span className="logo-row">
                         <span className="logo-highlight">402</span>
-                        <span style={{ color: 'var(--text-primary)' }}>FC</span>
-                        <span style={{
-                            fontSize: '12px',
-                            background: 'rgba(255,255,255,0.05)',
-                            border: '1px solid var(--border)',
-                            padding: '2px 8px',
-                            borderRadius: '12px',
-                            fontWeight: 500,
-                            color: 'var(--accent-teal)'
-                        }}>BETA</span>
+                        <span className="logo-main">FC</span>
+                        <span className="logo-beta">BETA</span>
                     </span>
                 </Link>
 
-                <nav style={{ display: 'flex', alignItems: 'center' }}>
+                <nav className="header-nav">
                     <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}>
                         Home
                     </Link>

@@ -81,13 +81,13 @@ export default function StreamingPage() {
                     <p>No streams listed right now.</p>
                 </div>
             ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '40px' }}>
+                <div className="stream-list">
                     {streams.map((stream) => {
                         const statusTag = getStatusTag(stream.status);
                         return (
-                            <div key={stream.id} className="card paid-section" style={{ padding: '24px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <div key={stream.id} className="card paid-section stream-card">
+                                <div className="stream-card-header">
+                                    <div className="stream-card-meta">
                                         <h3 className="paid-section-title">📺 {stream.title}</h3>
                                         <p className="paid-section-desc" style={{ marginBottom: 0 }}>
                                             {stream.competition} • {stream.homeTeam} vs {stream.awayTeam}
@@ -97,7 +97,7 @@ export default function StreamingPage() {
                                         </p>
                                     </div>
 
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                                    <div className="stream-card-badges">
                                         <span className="badge badge-paid">💰 {stream.priceFormatted || '0.08 STX'}</span>
                                         <span
                                             className="badge"
@@ -112,7 +112,7 @@ export default function StreamingPage() {
                                     </div>
                                 </div>
 
-                                <div style={{ marginTop: '16px' }}>
+                                <div className="stream-card-gate">
                                     <PaymentGate
                                         price={stream.price || '80000'}
                                         label={stream.title}

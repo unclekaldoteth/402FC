@@ -40,33 +40,22 @@ export default function StreamPlayer({ sessionData }) {
     const shouldRenderEmbed = Boolean(videoFailed && fallbackEmbedUrl);
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <div style={{
-                borderRadius: '12px',
-                border: '1px solid var(--border)',
-                background: '#000',
-                overflow: 'hidden',
-            }}>
+        <div className="stream-player">
+            <div className="stream-player-frame">
                 {shouldRenderEmbed ? (
                     <iframe
                         src={fallbackEmbedUrl}
                         title={sessionData?.title || 'Stream playback'}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
-                        style={{
-                            width: '100%',
-                            height: '460px',
-                            border: 'none',
-                            display: 'block',
-                            background: '#000',
-                        }}
+                        style={{ width: '100%', height: '100%', border: 'none', display: 'block', background: '#000' }}
                     />
                 ) : (
                     <video
                         controls
                         playsInline
                         preload="metadata"
-                        style={{ width: '100%', display: 'block', maxHeight: '460px' }}
+                        style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }}
                         onError={() => setVideoFailed(true)}
                     >
                         <source src={streamUrl} type={mimeType} />
@@ -75,14 +64,7 @@ export default function StreamPlayer({ sessionData }) {
                 )}
             </div>
 
-            <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: '8px',
-                fontSize: '12px',
-                color: 'var(--text-secondary)',
-            }}>
+            <div className="stream-player-tabs-wrap">
                 <div style={{ display: 'flex', gap: '8px' }}>
                     <button
                         type="button"
@@ -121,14 +103,7 @@ export default function StreamPlayer({ sessionData }) {
 
             {activeTab === 'stream' ? (
                 <>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        flexWrap: 'wrap',
-                        gap: '8px',
-                        fontSize: '12px',
-                        color: 'var(--text-secondary)',
-                    }}>
+                    <div className="stream-player-meta">
                         <span>Session expires: {formatDateTime(sessionData?.session?.expiresAt)}</span>
                         <span>Paid by: {paidBy || 'N/A'}</span>
                         <a
