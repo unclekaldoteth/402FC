@@ -8,7 +8,9 @@ export const metadata = {
   title: "402FC | Football Intelligence, Pay Per Match",
   description: "Web3 football highlights and analytics. Pay per match with STX.",
   icons: {
-    icon: 'https://crests.football-data.org/PL.png', // Temporary placeholder icon
+    icon: "/402fc-icon.svg",
+    shortcut: "/402fc-icon.svg",
+    apple: "/402fc-icon.svg",
   },
 };
 
